@@ -1,33 +1,51 @@
+var taskArray = [];
+
 function AgregarItem(){
     let tagInput = document.getElementById("input");
-    let divDisplay = document.getElementById("divDisplay");
-    if(tagInput.value != "")
-    {
-        let newTask = document.createElement("div");
-        divDisplay.appendChild(newTask);
-        let taskText = document.createElement("p");
-        taskText.className = "taskText";
-        taskText.innerHTML = tagInput.value;
-        newTask.appendChild(taskText);
-        newTask.onclick = function() {CheckValue(taskText, true)};
+    if(tagInput.value != ""){
+        let displayArray = [];
+        let divDisplay = document.getElementById("divDisplay");
+        divDisplay.innerHTML = null;
+        var task = {text: "", crossed: false, createTime: Date.now(), crossedTime: null};
+        task.text = tagInput.value;
+        taskArray.push(task);
+        displayArray = taskArray;
+        console.log(displayArray);
+        tagInput.value = "";
+
+        displayArray.forEach(element => {
+            let pTask = document.createElement("p");
+            CheckCrossed(element,pTask);
+            pTask.innerHTML = `${element.text} Fecha Creacion: ${element.createTime}`;
+            if(element.crossed){
+                pTask.innerHTML += (`, Fecha Finalizacion: ${element.crossedTime}`);
+            }
+            divDisplay.appendChild(pTask);
+            pTask.onclick = function() {ChangeCrossed(element,pTask)}
+        });
     }
-    let taskArray = document.getElementsByClassName("taskText");
-    for(let task of taskArray){
-        if(CheckValue(task, false)){
-            task.remove();
-        }
-    };
-    tagInput.value = "";
 }
-function CheckValue(element, change){
-    console.log(change);
-    if(element.style.textDecoration == "line-through"){
-        if(change){element.style.textDecoration = "";}
-        return true;
+function ChangeCrossed(element, tag){
+    if(element.crossed){
+        tag.style.textDecoration = "";
+        tag.style.color = "black";
+        element.crossed = false;
+        element.crossedTime = null;
     }
     else{
-        if(!change){element.style.textDecoration = "line-through";}
-        return false;
+        tag.style.textDecoration = "line-through";
+        element.crossed = true;
+        element.crossedTime = Date.now();
+        tag.style.color = "gray";
     }
-    
+}
+function CheckCrossed(element, tag){
+    if(element.crossed){
+        tag.style.textDecoration = "line-through";
+        tag.style.color = "gray";
+    }
+    else{
+        tag.style.textDecoration = "";
+        tag.style.color = "black";
+    }
 }
