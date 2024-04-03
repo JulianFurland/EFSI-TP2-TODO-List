@@ -10,11 +10,15 @@
 <body style="margin-top: 3rem; display: flex; justify-content: center; align-items: center;">
     <script src="script.js"></script>
     <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <h1>TODO List</h1>
-        <input id="input" type="text" style="width: 30%;">
-        <button style=" margin-top: 1rem; width: 15%;" onclick="AgregarItem()">Agregar</button>
-        <div id="divDisplay" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 45%;"></div>
+        <h1>ToDo List</h1>
+        <input id="input" type="text" style="width: 30%; background-color: #00000000;backdrop-filter: blur(8px); border-radius: 1em;color: #ffffff; font-family: Saeada_L;">
+        <div style="width: 30%; display: flex; flex-direction: row; justify-content: space-around;">
+            <button class="btn" style=" margin-top: 1rem; width: 40%;" onclick="AgregarItem()">Agregar</button>
+            <button class="btn" style=" margin-top: 1rem; width: 40%;" onclick="TareaCorta()">Tarea mas corta</button>
+        </div>
+        <div id="tareaMasCorta" style="color: #feb900; font-size:larger; font-family: Saeada_B;"></div>
+        <div id="divDisplay" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 45%; border-radius: 10%; backdrop-filter: blur(8px);"></div>
     </div>
-    <button style=" margin-top: 1rem; width: 15%;" onclick="TareaCorta()">Tarea mas corta</button>
+    
 </body>
 </html>

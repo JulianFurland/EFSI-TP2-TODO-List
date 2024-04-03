@@ -9,3 +9,36 @@
 a{
     text-decoration: no;
 }
+
+h1{
+    font-family: Saeada_B;
+    color: #feb900;
+}
+
+p{
+    color: #feb900;
+}
+.btn{
+    background-color: #00000000;
+    font-family: Saeada_B;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 12px 40px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 10px;
+    color: #feb900;
+    border: 2px solid #feb900;
+}
+
+.btn:hover{
+    background-color: #feb900;
+    color: black;
+}
+
+body{
+    background-image: url(bg.jpg);
+    background-size: 100%;
+}

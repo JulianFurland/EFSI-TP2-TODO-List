@@ -6,7 +6,7 @@ function AgregarItem(){
         let displayArray = [];
         let divDisplay = document.getElementById("divDisplay");
         divDisplay.innerHTML = null;
-        var task = {text: "", crossed: false, createTime: GetDateNow(), crossedTime: null};
+        var task = {text: "", crossed: false, createTimeFormatted: GetDateNow(), createTime: Date.now(), crossedTimeFormatted: null, crossedTime: null};
         task.text = tagInput.value;
         taskArray.push(task);
         displayArray = taskArray;
@@ -19,9 +19,9 @@ function AgregarItem(){
             let pTime = document.createElement("p");
             CheckCrossed(element,pTask);
             pTask.innerHTML = `${element.text}:`;
-            pTime.innerHTML = `      Fecha Creacion: ${element.createTime}`;
+            pTime.innerHTML = `      Fecha Creacion: ${element.createTimeFormatted}`;
             if(element.crossed){
-                pTime.innerHTML += (`, Fecha Finalizacion: ${element.crossedTime}`);
+                pTime.innerHTML += (`, Fecha Finalizacion: ${element.crossedTimeFormatted}`);
             }
             pTime.style.fontFamily = "Saeada_L";
             pTime.style.fontSize = "small";
@@ -42,25 +42,27 @@ function AgregarItem(){
 function ChangeCrossed(element, tag){
     if(element.crossed){
         tag.style.textDecoration = "";
-        tag.style.color = "black";
+        tag.style.color = "#feb900";
         element.crossed = false;
         element.crossedTime = null;
+        element.crossedTimeFormatted = null;
     }
     else{
         tag.style.textDecoration = "line-through";
         element.crossed = true;
-        element.crossedTime = GetDateNow();
-        tag.style.color = "gray";
+        element.crossedTime = Date.now();
+        element.crossedTimeFormatted = GetDateNow();
+        tag.style.color = "black";
     }
 }
 function CheckCrossed(element, tag){
     if(element.crossed){
         tag.style.textDecoration = "line-through";
-        tag.style.color = "gray";
+        tag.style.color = "black";
     }
     else{
         tag.style.textDecoration = "";
-        tag.style.color = "black";
+        tag.style.color = "#feb900";
     }
 }
 
@@ -72,16 +74,14 @@ function GetDateNow(){
     var hhhh = `${dateNow.getHours()}:${dateNow.getMinutes()}`;
     return `${dd}/${mm}/${yyyy} ${hhhh}`;
 }
-function TareaCorta(strFecha1, strFecha2){
-    let dd1 = `${strFecha1[0]}${strFecha1[1]}`;
-    let mm1 = `${strFecha1[2]}${strFecha1[3]}`;
-    let yyyy1 = `${strFecha1[4]}${strFecha1[5]}${strFecha1[6]}${strFecha1[7]}`;
-    let hhhh1 = `${strFecha1[8]}${strFecha1[9]}${strFecha1[10]}${strFecha1[11]}`;
-
-    let dd2 = `${strFecha2[0]}${strFecha2[1]}`;
-    let mm2 = `${strFecha2[2]}${strFecha2[3]}`;
-    let yyyy2 = `${strFecha2[4]}${strFecha2[5]}${strFecha2[6]}${strFecha2[7]}`;
-    let hhhh2 = `${strFecha2[8]}${strFecha2[9]}${strFecha2[10]}${strFecha2[11]}`;
-
-
+function TareaCorta(){
+    let menor = -1;
+    let taskMenor = null;
+    taskArray.forEach(element => {
+        if ((menor == -1 || element.crossedTime - element.createTime < menor)&& element.crossedTime != null){
+            menor = element.crossedTime - element.createTime;
+            taskMenor = element;
+        }
+    });
+    document.getElementById("tareaMasCorta").innerHTML = taskMenor.text; 
 }
